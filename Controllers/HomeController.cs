@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using placements.Models;
 
 namespace placements.Controllers
@@ -12,12 +13,39 @@ namespace placements.Controllers
     [Route("api/[controller]")]
     public class HomeController : Controller
     {
-        Model model;
+        Model model = Model.ModelFactory();
 
         [HttpGet("[action]")]
-        public void PlacementsDataBaseInitialize()
+        public async Task<IActionResult> Main()
         {
-            model = Model.ModelFactory();
+            List<Placement> PlasementList = new List<Placement>();
+            var Data = await (from query_placement in model.PlasementList
+                              select new
+                              {
+                                  query_placement.id,
+                                  query_placement.header,
+                                  query_placement.type,
+                                  query_placement.location,
+                                  query_placement.entity,
+                                  query_placement.size,
+                                  query_placement.fromDate,
+                                  query_placement.toDate
+                              }
+                              ).ToListAsync();
+            Data.ForEach(i =>
+            {
+                Placement placement = new Placement();
+                placement.id = i.id;
+                placement.header = i.header;
+                placement.type = i.type;
+                placement.location = i.location;
+                placement.entity = i.entity;
+                placement.size = i.size;
+                placement.fromDate = i.fromDate;
+                placement.toDate = i.toDate;
+                PlasementList.Add(placement);
+            });
+            return Json(PlasementList);
         }
     }
 }

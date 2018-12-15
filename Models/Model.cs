@@ -8,8 +8,8 @@ namespace placements.Models
 {
     public class Model : DbContext
     {
-        bool IsInitialize = true;
-        bool IsRecreate = true;
+        bool IsInitialize = false;
+        bool IsRecreate = false;
         public DbSet<Placement> PlasementList { get; set; }
         public Placement placement = new Placement();
         public Model(DbContextOptions<Model> options) : base(options)
@@ -26,7 +26,7 @@ namespace placements.Models
         public static Model ModelFactory()
         {
             var optionsBuilder = new DbContextOptionsBuilder<Model>();
-            var connectionString = "Server=LAPTOP-73MHSR7G\\SQLEXPRESS;Database=PlacementsDataBase;Trusted_Connection=True";
+            var connectionString = "Server=LAPTOP-73MHSR7G\\SQLEXPRESS;Database=PlacementsDataBase;Trusted_Connection=True;MultipleActiveResultSets=true";
             optionsBuilder.UseSqlServer(connectionString);
             return new Model(optionsBuilder.Options);
         }

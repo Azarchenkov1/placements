@@ -1,0 +1,21 @@
+<p *ngIf="!placementlist"><em>Loading...</em></p>
+
+<div class="placements-image">
+        <img src="../../assets/placements.png" style="height: 40px">
+  </div>
+
+<div *ngIf="placementlist" class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 div-main">
+      <div *ngFor="let placement of placementlist" class="div-placement">
+        <p>{{ placement.header }}</p>
+        <p>placement type: {{ placement.type }}</p>
+        <p>placement location: {{ placement.location }}</p>
+    </div>
+    </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+ </div>

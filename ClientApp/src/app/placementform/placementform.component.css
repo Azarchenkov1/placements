@@ -1,0 +1,30 @@
+.div-main {
+    background-color: lightgray; 
+    text-align: center;
+    margin-top: 5px; 
+    border-style: solid; 
+    border-width: 2px; 
+    border-color: black
+  }
+
+.div-placement {
+    background-color: white; 
+    margin: 10px; 
+    border-style: solid;
+    border-width: 2px; 
+    border-color: black
+}
+.placements-image {
+    margin: auto;
+    width: 287px;
+    height: 44px;
+    border-style: solid; 
+    border-width: 2px; 
+    border-color: black
+}
+.label {
+    text-align: right;
+    clear: both;
+    float:left;
+    margin-right:15px;
+}

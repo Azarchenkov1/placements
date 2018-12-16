@@ -47,5 +47,23 @@ namespace placements.Controllers
             });
             return Json(PlasementList);
         }
+
+        [HttpPost("[action]")]
+        public IActionResult newplacement([FromBody]Placement placement)
+        {
+            Console.WriteLine("incoming post request received: api/home/newplacement<---------------||");
+            if(placement != null)
+            {
+                Console.WriteLine("data was received, saving to database and send successful response<---------------||");
+                model.PlasementList.Add(placement);
+                model.SaveChanges();
+                return Json("successful response");
+            }
+            else
+            {
+                Console.WriteLine("data does not received<---------------||");
+                return Json("invalid response");
+            }
+        }
     }
 }

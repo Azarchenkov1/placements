@@ -9,7 +9,8 @@
     <div class="col-md-8 div-main">
 
 
-        <form class="form-horizontal" #placementForm="ngForm" (ngSubmit)="submitData(placementForm)">  
+        <form class="form-horizontal" #placementForm="ngForm" 
+        (ngSubmit)="submitData(placementForm, mainphoto.files, photo2.files, photo3.files, photo4.files, photo5.files)">  
           
             <div class="container-fluid">
                 <h2 class="form-signin-heading">newplacement</h2>
@@ -17,6 +18,10 @@
                 <label>header</label>
                 <input type="email" id="header" name="header" ngModel class="form-control" placeholder="header" required autofocus>
                 <br/>
+                <label>main photo</label>
+                <div class="div-placement" style="background-color:beige; padding: 5px">
+                  <input #mainphoto type="file" name="mainphoto" ngModel />
+                </div>
                 <label>type</label>
                 <input type="email" id="type" name="type" ngModel class="form-control" placeholder="type" required>
                 <br/>
@@ -35,6 +40,13 @@
                 <label>toDate</label>
                 <input type="email" id="toDate" name="toDate" ngModel class="form-control" placeholder="toDate" required>
                 <br/>
+                <label>additional photos</label>
+                <div class="div-placement" style="background-color:beige; padding: 5px">
+                  <input #photo2 type="file" name="photo2" ngModel />
+                  <input #photo3 type="file" name="photo3" ngModel />
+                  <input #photo4 type="file" name="photo4" ngModel />
+                  <input #photo5 type="file" name="photo5" ngModel />
+                </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
               </div>
 

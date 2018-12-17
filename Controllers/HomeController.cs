@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +16,7 @@ namespace placements.Controllers
     public class HomeController : Controller
     {
         Model model = Model.ModelFactory();
+        string photopath = "ClientApp/src/assets/photos";
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Main()
@@ -63,6 +66,30 @@ namespace placements.Controllers
             {
                 Console.WriteLine("data does not received<---------------||");
                 return Json("invalid response");
+            }
+        }
+
+        [HttpPost("[action]"), DisableRequestSizeLimit]
+        public ActionResult uploadfile()
+        {
+            Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
+            try
+            {
+                foreach(IFormFile file in Request.Form.Files)
+                {
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(photopath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    Console.WriteLine(fileName + " has been successfuly saved in directory<---------------||");
+                }
+                return Json("upload successful");
+            }
+            catch (System.Exception ex)
+            {
+                return Json("Upload Failed: " + ex.Message);
             }
         }
     }

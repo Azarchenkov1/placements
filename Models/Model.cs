@@ -37,9 +37,9 @@ namespace placements.Models
         }
         void Initialize()
         {
-            PlasementList.Add(placement1);
-            PlasementList.Add(placement2);
-            PlasementList.Add(placement3);
+            this.PlasementList.Add(placement1);
+            this.PlasementList.Add(placement2);
+            this.PlasementList.Add(placement3);
             SaveChanges();
         }
 

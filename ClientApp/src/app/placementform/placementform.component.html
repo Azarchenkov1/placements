@@ -1,60 +1,60 @@
 <div class="placements-image">
-  <img src="../../assets/placements.png" style="height: 40px">
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8 div-main">
-
-
-        <form class="form-horizontal" #placementForm="ngForm" 
-        (ngSubmit)="submitData(placementForm, mainphoto.files, photo2.files, photo3.files, photo4.files, photo5.files)">  
-          
-            <div class="container-fluid">
-                <h2 class="form-signin-heading">newplacement</h2>
-                <br/>
-                <label>header</label>
-                <input type="email" id="header" name="header" ngModel class="form-control" placeholder="header" required autofocus>
-                <br/>
-                <label>main photo</label>
-                <div class="div-placement" style="background-color:beige; padding: 5px">
-                  <input #mainphoto type="file" name="mainphoto" ngModel />
+    <img src="../../assets/placements.png" style="height: 40px">
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8 div-main">
+  
+  
+          <form class="form-horizontal" #placementForm="ngForm" 
+          (ngSubmit)="submitData(placementForm, mainphoto.files, photo2.files, photo3.files, photo4.files, photo5.files)">  
+            
+              <div class="container-fluid">
+                  <h2 class="form-signin-heading">newplacement</h2>
+                  <br/>
+                  <label>header</label>
+                  <input type="email" id="header" name="header" ngModel class="form-control" placeholder="header" required autofocus>
+                  <br/>
+                  <label>main photo</label>
+                  <div class="div-placement" style="background-color:beige; padding: 5px">
+                    <input #mainphoto type="file" name="mainphoto" ngModel />
+                  </div>
+                  <label>type</label>
+                  <input type="email" id="type" name="type" ngModel class="form-control" placeholder="type" required>
+                  <br/>
+                  <label>location</label>
+                  <input type="email" id="location" name="location" ngModel class="form-control" placeholder="location" required>
+                  <br/>
+                  <label>entity</label>
+                  <input type="email" id="entity" name="entity" ngModel class="form-control" placeholder="entity" required>
+                  <br/>
+                  <label>size</label>
+                  <input type="email" id="size" name="size" ngModel class="form-control" placeholder="size" required>
+                  <br/>
+                  <label>fromDate</label>
+                  <input type="email" id="fromDate" name="fromDate" ngModel class="form-control" placeholder="fromDate" required>
+                  <br/>
+                  <label>toDate</label>
+                  <input type="email" id="toDate" name="toDate" ngModel class="form-control" placeholder="toDate" required>
+                  <br/>
+                  <label>additional photos</label>
+                  <div class="div-placement" style="background-color:beige; padding: 5px">
+                    <input #photo2 type="file" name="photo2" ngModel />
+                    <input #photo3 type="file" name="photo3" ngModel />
+                    <input #photo4 type="file" name="photo4" ngModel />
+                    <input #photo5 type="file" name="photo5" ngModel />
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
                 </div>
-                <label>type</label>
-                <input type="email" id="type" name="type" ngModel class="form-control" placeholder="type" required>
-                <br/>
-                <label>location</label>
-                <input type="email" id="location" name="location" ngModel class="form-control" placeholder="location" required>
-                <br/>
-                <label>entity</label>
-                <input type="email" id="entity" name="entity" ngModel class="form-control" placeholder="entity" required>
-                <br/>
-                <label>size</label>
-                <input type="email" id="size" name="size" ngModel class="form-control" placeholder="size" required>
-                <br/>
-                <label>fromDate</label>
-                <input type="email" id="fromDate" name="fromDate" ngModel class="form-control" placeholder="fromDate" required>
-                <br/>
-                <label>toDate</label>
-                <input type="email" id="toDate" name="toDate" ngModel class="form-control" placeholder="toDate" required>
-                <br/>
-                <label>additional photos</label>
-                <div class="div-placement" style="background-color:beige; padding: 5px">
-                  <input #photo2 type="file" name="photo2" ngModel />
-                  <input #photo3 type="file" name="photo3" ngModel />
-                  <input #photo4 type="file" name="photo4" ngModel />
-                  <input #photo5 type="file" name="photo5" ngModel />
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
-              </div>
-
-        </form>  
-
-
-    </div>
-    <div class="col-md-2">
+  
+          </form>  
+  
+  
+      </div>
+      <div class="col-md-2">
+      </div>
     </div>
   </div>
-</div>

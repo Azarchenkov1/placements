@@ -16,7 +16,7 @@ namespace placements.Controllers
     public class HomeController : Controller
     {
         Model model = Model.ModelFactory();
-        string photopath = "ClientApp/src/assets/photos";
+        string photoPath = "ClientApp/src/assets/photos";
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Main()
@@ -27,12 +27,17 @@ namespace placements.Controllers
                               {
                                   query_placement.id,
                                   query_placement.header,
+                                  query_placement.mainphoto,
                                   query_placement.type,
                                   query_placement.location,
                                   query_placement.entity,
                                   query_placement.size,
                                   query_placement.fromDate,
-                                  query_placement.toDate
+                                  query_placement.toDate,
+                                  query_placement.photo2,
+                                  query_placement.photo3,
+                                  query_placement.photo4,
+                                  query_placement.photo5
                               }
                               ).ToListAsync();
             Data.ForEach(i =>
@@ -40,12 +45,17 @@ namespace placements.Controllers
                 Placement placement = new Placement();
                 placement.id = i.id;
                 placement.header = i.header;
+                placement.mainphoto = i.mainphoto;
                 placement.type = i.type;
                 placement.location = i.location;
                 placement.entity = i.entity;
                 placement.size = i.size;
                 placement.fromDate = i.fromDate;
                 placement.toDate = i.toDate;
+                placement.photo2 = i.photo2;
+                placement.photo3 = i.photo3;
+                placement.photo4 = i.photo4;
+                placement.photo5 = i.photo5;
                 PlasementList.Add(placement);
             });
             return Json(PlasementList);
@@ -78,7 +88,7 @@ namespace placements.Controllers
                 foreach(IFormFile file in Request.Form.Files)
                 {
                     string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    string fullPath = Path.Combine(photopath, fileName);
+                    string fullPath = Path.Combine(photoPath, fileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);

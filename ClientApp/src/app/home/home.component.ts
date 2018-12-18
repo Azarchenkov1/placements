@@ -19,10 +19,15 @@ export class HomeComponent {
 interface Placement {
   id: number,
   header: string,
+  mainphoto: string,
   type: string,
   location: string,
   entity: string,
   size: string,
   fromDate: string,
-  toDate: string
+  toDate: string,
+  photo2: string,
+  photo3: string,
+  photo4: string,
+  photo5: string,
 }

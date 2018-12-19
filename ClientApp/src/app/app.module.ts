@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PlacementformComponent } from './placementform/placementform.component';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { PlacementformComponent } from './placementform/placementform.component'
     NavMenuComponent,
     HomeComponent,
     PlacementformComponent,
+    DetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -23,7 +25,8 @@ import { PlacementformComponent } from './placementform/placementform.component'
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'placementform', component: PlacementformComponent }
+      { path: 'placementform', component: PlacementformComponent },
+      { path: 'details', component: DetailsComponent }
     ])
   ],
   providers: [],

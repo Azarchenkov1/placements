@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { PlacementformComponent } from './placementform/placementform.component';
 import { DetailsComponent } from './details/details.component';
+import { ImagetestComponent } from './imagetest/imagetest.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DetailsComponent } from './details/details.component';
     HomeComponent,
     PlacementformComponent,
     DetailsComponent,
+    ImagetestComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,7 +28,8 @@ import { DetailsComponent } from './details/details.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'placementform', component: PlacementformComponent },
-      { path: 'details', component: DetailsComponent }
+      { path: 'details', component: DetailsComponent },
+      { path: 'imagetest', component: ImagetestComponent }
     ])
   ],
   providers: [],

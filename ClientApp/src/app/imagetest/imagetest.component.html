@@ -1,0 +1,14 @@
+<p>
+  imagetest works!
+</p>
+<label>main photo</label>
+<form class="form-horizontal" #placementForm="ngForm" 
+(ngSubmit)="submitData(mainphoto.files)">  
+<div class="div-placement" style="background-color:beige; padding: 5px">
+  <input #mainphoto type="file" name="mainphoto" ngModel />
+</div>
+<button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
+</form>  
+
+
+<img src="data:image/jpg;base64,{{ str.body }}">

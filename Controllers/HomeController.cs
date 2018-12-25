@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using placements.Models;
+using System.Drawing;
 
 namespace placements.Controllers
 {
@@ -100,6 +101,40 @@ namespace placements.Controllers
             catch (System.Exception ex)
             {
                 return Json("Upload Failed: " + ex.Message);
+            }
+        }
+
+        [HttpPost("[action]"), DisableRequestSizeLimit]
+        public ActionResult returnimagelist()
+        {
+            Console.WriteLine("incoming post request received: api/home/returnimagelist<---------------||");
+            List<byte[]> bytelist = new List<byte[]>();
+            byte[] globalbytearray = null;
+            if(Request.Form.Files != null)
+            {
+                foreach(IFormFile file in Request.Form.Files)
+                {
+                    Console.WriteLine(file.Name);
+                    byte[] bytearray = null;
+                    using (var readstream = file.OpenReadStream())
+                    using (var memorystream = new MemoryStream())
+                    {
+                        readstream.CopyTo(memorystream);
+                        bytearray = memorystream.ToArray();
+                        //string stringimage = Convert.ToBase64String(bytearray);
+                        Console.WriteLine(bytearray);
+                        //Console.WriteLine(stringimage);
+                        bytelist.Add(bytearray);
+                        globalbytearray = bytearray;
+                    }
+                }
+                Console.WriteLine("Images successfuly saved to bytelist, send response with it");
+                return Json(globalbytearray);
+            }
+            else
+            {
+                Console.WriteLine("Bad request, no images");
+                return Json("Bad response, no images");
             }
         }
     }

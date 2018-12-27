@@ -3,15 +3,18 @@
 <div class="col-md-8 div-main">
 <label>imagetest</label>
 <form class="form-horizontal" #placementForm="ngForm" 
-(ngSubmit)="submitData(mainphoto.files)">  
+(ngSubmit)="submitData(mainphoto.files, secondphoto.files)">
 <div class="div-placement" style="background-color:beige; padding: 5px">
   <input #mainphoto type="file" name="mainphoto" ngModel />
+  <input #secondphoto type="file" name="secondphoto" ngModel />
 </div>
 <button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
 </form>  
 
 <div *ngIf="imageset != null" class="div-placement">
-<img src="data:image/jpg;base64,{{ imageset.body }}" style="max-width: 95%">
+  <div *ngFor="let image of imageset.body">
+<img src="data:image/jpg;base64,{{ image }}" style="max-width: 95%; margin-top: 5px;">
+ </div>
 </div>
 </div>
 <div class="col-md-2"></div>

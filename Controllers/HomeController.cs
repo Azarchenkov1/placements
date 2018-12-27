@@ -114,22 +114,18 @@ namespace placements.Controllers
             {
                 foreach(IFormFile file in Request.Form.Files)
                 {
-                    Console.WriteLine(file.Name);
+                    Console.WriteLine("received image:" + file.Name + "<---------------||");
                     byte[] bytearray = null;
                     using (var readstream = file.OpenReadStream())
                     using (var memorystream = new MemoryStream())
                     {
                         readstream.CopyTo(memorystream);
                         bytearray = memorystream.ToArray();
-                        //string stringimage = Convert.ToBase64String(bytearray);
-                        Console.WriteLine(bytearray);
-                        //Console.WriteLine(stringimage);
                         bytelist.Add(bytearray);
-                        globalbytearray = bytearray;
                     }
                 }
-                Console.WriteLine("Images successfuly saved to bytelist, send response with it");
-                return Json(globalbytearray);
+                Console.WriteLine("Images successfuly saved to bytelist, send response with it<---------------||");
+                return Json(bytelist);
             }
             else
             {

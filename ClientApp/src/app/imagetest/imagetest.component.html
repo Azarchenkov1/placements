@@ -1,7 +1,7 @@
-<p>
-  imagetest works!
-</p>
-<label>main photo</label>
+<div class="col-md-2"></div>
+
+<div class="col-md-8 div-main">
+<label>imagetest</label>
 <form class="form-horizontal" #placementForm="ngForm" 
 (ngSubmit)="submitData(mainphoto.files)">  
 <div class="div-placement" style="background-color:beige; padding: 5px">
@@ -10,5 +10,8 @@
 <button class="btn btn-lg btn-primary btn-block" type="submit">submitData</button>
 </form>  
 
-
-<img src="data:image/jpg;base64,{{ str.body }}">
+<div *ngIf="str != null" class="div-placement">
+<img src="data:image/jpg;base64,{{ str.body }}" style="max-width: 95%">
+</div>
+</div>
+<div class="col-md-2"></div>

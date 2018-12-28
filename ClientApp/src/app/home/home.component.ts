@@ -10,8 +10,10 @@ export class HomeComponent {
   public placementlist = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    console.log("send initializing request<---------------||");
     http.get<Placement[]>(baseUrl + 'api/home/main').subscribe(result => {
       this.placementlist = result;
+      console.log("response received");
     }, error => console.error(error));
   }
 
@@ -27,32 +29,32 @@ export class HomeComponent {
     //but not element PROPERTY
 
     sessionStorage.setItem("header", this.placementlist[idvalue].header);
-    sessionStorage.setItem("mainphoto", this.placementlist[idvalue].mainphoto);
+    sessionStorage.setItem("image_1", this.placementlist[idvalue].image_1);
     sessionStorage.setItem("type", this.placementlist[idvalue].type);
     sessionStorage.setItem("location", this.placementlist[idvalue].location);
     sessionStorage.setItem("entity", this.placementlist[idvalue].entity);
     sessionStorage.setItem("size", this.placementlist[idvalue].size);
     sessionStorage.setItem("fromDate", this.placementlist[idvalue].fromDate);
     sessionStorage.setItem("toDate", this.placementlist[idvalue].toDate);
-    sessionStorage.setItem("photo2", this.placementlist[idvalue].photo2);
-    sessionStorage.setItem("photo3", this.placementlist[idvalue].photo3);
-    sessionStorage.setItem("photo4", this.placementlist[idvalue].photo4);
-    sessionStorage.setItem("photo5", this.placementlist[idvalue].photo5);
+    sessionStorage.setItem("image_2", this.placementlist[idvalue].image_2);
+    sessionStorage.setItem("image_3", this.placementlist[idvalue].image_3);
+    sessionStorage.setItem("image_4", this.placementlist[idvalue].image_4);
+    sessionStorage.setItem("image_5", this.placementlist[idvalue].image_5);
   }
 }
 
 interface Placement {
   id: number,
   header: string,
-  mainphoto: string,
+  image_1: any,
   type: string,
   location: string,
   entity: string,
   size: string,
   fromDate: string,
   toDate: string,
-  photo2: string,
-  photo3: string,
-  photo4: string,
-  photo5: string,
+  photo2: any,
+  photo3: any,
+  photo4: any,
+  photo5: any,
 }

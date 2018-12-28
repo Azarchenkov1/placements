@@ -22,42 +22,50 @@ namespace placements.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> Main()
         {
+            Console.WriteLine("time mark1<---------------||");
+
+
             List<Placement> PlasementList = new List<Placement>();
             var Data = await (from query_placement in model.PlasementList
                               select new
                               {
                                   query_placement.id,
                                   query_placement.header,
-                                  query_placement.mainphoto,
+                                  query_placement.image_1,
                                   query_placement.type,
                                   query_placement.location,
                                   query_placement.entity,
                                   query_placement.size,
                                   query_placement.fromDate,
                                   query_placement.toDate,
-                                  query_placement.photo2,
-                                  query_placement.photo3,
-                                  query_placement.photo4,
-                                  query_placement.photo5
+                                  query_placement.image_2,
+                                  query_placement.image_3,
+                                  query_placement.image_4,
+                                  query_placement.image_5
                               }
                               ).ToListAsync();
+
+            Console.WriteLine("time mark2<---------------||");
+
             Data.ForEach(i =>
             {
+                Console.WriteLine("time mark3<---------------||");
                 Placement placement = new Placement();
                 placement.id = i.id;
                 placement.header = i.header;
-                placement.mainphoto = i.mainphoto;
+                placement.image_1 = i.image_1;
                 placement.type = i.type;
                 placement.location = i.location;
                 placement.entity = i.entity;
                 placement.size = i.size;
                 placement.fromDate = i.fromDate;
                 placement.toDate = i.toDate;
-                placement.photo2 = i.photo2;
-                placement.photo3 = i.photo3;
-                placement.photo4 = i.photo4;
-                placement.photo5 = i.photo5;
+                placement.image_2 = i.image_2;
+                placement.image_3 = i.image_3;
+                placement.image_4 = i.image_4;
+                placement.image_5 = i.image_5;
                 PlasementList.Add(placement);
+                Console.WriteLine("time mark4<---------------||");
             });
             return Json(PlasementList);
         }
@@ -86,16 +94,68 @@ namespace placements.Controllers
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
             try
             {
-                foreach(IFormFile file in Request.Form.Files)
+                string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
+                Console.WriteLine("received image: " + name + "<---------------||");
+                foreach(var placement in model.PlasementList)
                 {
-                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    string fullPath = Path.Combine(photoPath, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    Console.WriteLine("foreach mainphoto is: " + placement.mainphoto + "<---------------||");
+                    if(placement.mainphoto == name && placement.image_1 == null)
                     {
-                        file.CopyTo(stream);
+                        Console.WriteLine("if(placement.mainphoto == name && placement.image_1 == null) => true<---------------||");
+
+                        byte[] bytearray = null;
+                        using (var readstream = Request.Form.Files[0].OpenReadStream())
+                        using (var memorystream = new MemoryStream())
+                        {
+                            readstream.CopyTo(memorystream);
+                            bytearray = memorystream.ToArray();
+                            Console.WriteLine(Convert.ToBase64String(bytearray) + "BYTEARRAY<---------------||");
+                            placement.image_1 = Convert.ToBase64String(bytearray);
+                            Console.WriteLine(placement.image_1 + "IMAGE_1<---------------||");
+                        }
+
+                        bytearray = null;
+                        using (var readstream = Request.Form.Files[1].OpenReadStream())
+                        using (var memorystream = new MemoryStream())
+                        {
+                            readstream.CopyTo(memorystream);
+                            bytearray = memorystream.ToArray();
+                            placement.image_2 = Convert.ToBase64String(bytearray);
+
+                        }
+
+                        bytearray = null;
+                        using (var readstream = Request.Form.Files[2].OpenReadStream())
+                        using (var memorystream = new MemoryStream())
+                        {
+                            readstream.CopyTo(memorystream);
+                            bytearray = memorystream.ToArray();
+                            placement.image_3 = Convert.ToBase64String(bytearray);
+
+                        }
+
+                        bytearray = null;
+                        using (var readstream = Request.Form.Files[3].OpenReadStream())
+                        using (var memorystream = new MemoryStream())
+                        {
+                            readstream.CopyTo(memorystream);
+                            bytearray = memorystream.ToArray();
+                            placement.image_4 = Convert.ToBase64String(bytearray);
+
+                        }
+
+                        bytearray = null;
+                        using (var readstream = Request.Form.Files[4].OpenReadStream())
+                        using (var memorystream = new MemoryStream())
+                        {
+                            readstream.CopyTo(memorystream);
+                            bytearray = memorystream.ToArray();
+                            placement.image_5 = Convert.ToBase64String(bytearray);
+                        }
                     }
-                    Console.WriteLine(fileName + " has been successfuly saved in directory<---------------||");
                 }
+                model.SaveChanges();
+                Console.WriteLine("images successfuly saved, returning response<---------------||");
                 return Json("upload successful");
             }
             catch (System.Exception ex)

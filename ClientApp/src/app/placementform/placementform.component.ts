@@ -16,17 +16,17 @@ export class PlacementformComponent {
     var newplacement = {
        id: 0,
    header: form.value.header,
-mainphoto: '../../assets/photos/' + mainphoto[0].name,
+mainphoto: mainphoto[0].name,
      type: form.value.type,
  location: form.value.location,
    entity: form.value.entity,
      size: form.value.size,
  fromDate: form.value.fromDate,
    toDate: form.value.toDate,
-   photo2: '../../assets/photos/' + photo2[0].name,
-   photo3: '../../assets/photos/' + photo3[0].name,
-   photo4: '../../assets/photos/' + photo4[0].name,
-   photo5: '../../assets/photos/' + photo5[0].name,
+   photo2: photo2[0].name,
+   photo3: photo3[0].name,
+   photo4: photo4[0].name,
+   photo5: photo5[0].name,
 }
 console.log("newplacement initialized<---------------||");
 

@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using placements.Models;
 using System.Drawing;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace placements.Controllers
 {
@@ -191,6 +195,36 @@ namespace placements.Controllers
             {
                 Console.WriteLine("Bad request, no images");
                 return Json("Bad response, no images");
+            }
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Login([FromBody]User user)
+        {
+            if (user == null)
+            {
+                return BadRequest("Invalid client request<---------------||");
+            }
+
+            if(user.userLogin == "testlogin" && user.userPassword == "testpassword")
+            {
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jmf84jfjg@testKey@345"));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: "http://locahost:3000",
+                    audience: "http://localhost:3000",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(20),
+                    signingCredentials: signinCredentials
+                    );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                return Ok(new { Token = tokenString });
+            }
+            else
+            {
+                return Unauthorized();
             }
         }
     }

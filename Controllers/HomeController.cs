@@ -201,10 +201,14 @@ namespace placements.Controllers
         [HttpPost("[action]")]
         public IActionResult Login([FromBody]User user)
         {
+            Console.WriteLine("Incoming client request<---------------||");
             if (user == null)
             {
                 return BadRequest("Invalid client request<---------------||");
             }
+
+            Console.WriteLine(user.userLogin + "<---------------||");
+            Console.WriteLine(user.userPassword + "<---------------||");
 
             if(user.userLogin == "testlogin" && user.userPassword == "testpassword")
             {
@@ -220,10 +224,12 @@ namespace placements.Controllers
                     );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                Console.WriteLine("successful  response<---------------||");
                 return Ok(new { Token = tokenString });
             }
             else
             {
+                Console.WriteLine("error<---------------||");
                 return Unauthorized();
             }
         }

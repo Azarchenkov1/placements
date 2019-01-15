@@ -1,9 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/"><button class="btn btn-secondary" type="button">Home</button></a>
-      </li>
-    </ul>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+        <ul style="margin-left: 25px" class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/"><button class="btn btn-secondary" type="button">Home</button></a>
+            </li>
+            <li>
+              <a *ngIf="!isUserAuthenticated()" class="nav-link" href="/login"><button class="btn btn-secondary" type="button">Login</button></a>
+              <a *ngIf="isUserAuthenticated()" class="nav-link" (click)="logOut()" href="/"><button class="btn btn-secondary" type="button">Logout</button></a>  
+            </li>
+            <li>
+              <h4 *ngIf="isUserAuthenticated()" style="color:white; margin-top: 16px">Authorized as: {{ userLogin }}</h4>
+            </li>
+          </ul>
+
+    </div>
+    <div class="col-md-2"></div>
   </div>
 </nav>

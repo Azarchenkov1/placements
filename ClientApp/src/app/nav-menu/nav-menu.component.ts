@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  userLogin;
 
   collapse() {
     this.isExpanded = false;
@@ -14,5 +15,20 @@ export class NavMenuComponent {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  logOut() {
+    localStorage.removeItem("jwt");
+  }
+  
+  isUserAuthenticated() {
+    let token: string = localStorage.getItem("jwt");
+    if (token != null) {
+      this.userLogin = localStorage.getItem("userLogin");
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

@@ -23,6 +23,8 @@ namespace placements.Models
         public string photo4 { get; set; }
         public string photo5 { get; set; }
 
+        public User owner { get; set; }
+
         public string image_1 { get; set; }
         public string image_2 { get; set; }
         public string image_3 { get; set; }

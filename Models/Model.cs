@@ -11,7 +11,7 @@ namespace placements.Models
         bool IsInitialize = false;
         bool IsRecreate = false;
         public DbSet<Placement> PlasementList { get; set; }
-        public Placement placement = new Placement();
+        public DbSet<User> UserList { get; set; }
         public Model(DbContextOptions<Model> options) : base(options)
         {
             if(IsRecreate)
@@ -32,7 +32,6 @@ namespace placements.Models
         }
         void Recreate()
         {
-            this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
         void Initialize()
@@ -40,6 +39,14 @@ namespace placements.Models
             this.PlasementList.Add(placement1);
             this.PlasementList.Add(placement2);
             this.PlasementList.Add(placement3);
+
+            this.UserList.Add(user1);
+            this.UserList.Add(user2);
+
+            placement1.owner = user2;
+            placement2.owner = user2;
+            placement3.owner = user2;
+
             SaveChanges();
         }
 
@@ -47,5 +54,8 @@ namespace placements.Models
         public Placement placement1 = new Placement { header = "website placement", type = "website", location = "website.net" };
         public Placement placement2 = new Placement { header = "street bigbord placement", type = "street", location = "Kiev, Saksaganskogo str." };
         public Placement placement3 = new Placement { header = "sky mall placements", type = "building", location = "Kiev, Generala Vatutina str." };
+
+        public User user1 = new User { userLogin = "Admin", userPassword = "Admin", userAdmin = true };
+        public User user2 = new User { userLogin = "Danil", userPassword = "Danil", userAdmin = false };
     }
 }

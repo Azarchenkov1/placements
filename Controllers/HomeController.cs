@@ -199,16 +199,42 @@ namespace placements.Controllers
         }
 
         [HttpPost("[action]")]
+        public IActionResult Registration([FromBody]User user)
+        {
+            Console.WriteLine("Incoming client request: api/home/registration<---------------||");
+            if (user == null)
+            {
+                return BadRequest("Invalid client request<---------------||");
+            }
+            //string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
+            //var Data = await(from imageset in model.PlasementList
+            //                 where imageset.mainphoto == name
+            //                 where imageset.image_1 == null
+            //                 select new
+            //                 {
+            //                     imageset.image_1,
+            //                     imageset.image_2,
+            //                     imageset.image_3,
+            //                     imageset.image_4,
+            //                     imageset.image_5
+            //                 }
+            //                  ).ToListAsync();
+            return BadRequest("Invalid client request<---------------||");
+
+
+        }
+
+        [HttpPost("[action]")]
         public IActionResult Login([FromBody]User user)
         {
-            Console.WriteLine("Incoming client request<---------------||");
+            Console.WriteLine("Incoming client request: api/home/login<---------------||");
             if (user == null)
             {
                 return BadRequest("Invalid client request<---------------||");
             }
 
-            Console.WriteLine(user.userLogin + "<---------------||");
-            Console.WriteLine(user.userPassword + "<---------------||");
+            Console.WriteLine("userLogin" + user.userLogin + "<---------------||");
+            Console.WriteLine("userPassword" + user.userPassword + "<---------------||");
 
             if(user.userLogin == "testlogin" && user.userPassword == "testpassword")
             {

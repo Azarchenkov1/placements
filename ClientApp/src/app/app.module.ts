@@ -11,6 +11,7 @@ import { PlacementformComponent } from './placementform/placementform.component'
 import { DetailsComponent } from './details/details.component';
 import { ImagetestComponent } from './imagetest/imagetest.component';
 import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoginComponent } from './login/login.component';
     DetailsComponent,
     ImagetestComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,8 @@ import { LoginComponent } from './login/login.component';
       { path: 'placementform', component: PlacementformComponent },
       { path: 'details', component: DetailsComponent },
       { path: 'imagetest', component: ImagetestComponent },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'registration', component: RegistrationComponent }
     ])
   ],
   providers: [],

@@ -204,24 +204,15 @@ namespace placements.Controllers
             Console.WriteLine("Incoming client request: api/home/registration<---------------||");
             if (user == null)
             {
-                return BadRequest("Invalid client request<---------------||");
+                Console.WriteLine("Invalid client request<---------------||");
+                return Json("Invalid client request<---------------||");
+            } else {
+                Console.WriteLine("Save received data<---------------||");
+                model.UserList.Add(user);
+                model.SaveChanges();
+                Console.WriteLine("Received data successfuly saved, sending successful response<---------------||");
+                return Json("Received data successfuly saved<---------------||");
             }
-            //string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
-            //var Data = await(from imageset in model.PlasementList
-            //                 where imageset.mainphoto == name
-            //                 where imageset.image_1 == null
-            //                 select new
-            //                 {
-            //                     imageset.image_1,
-            //                     imageset.image_2,
-            //                     imageset.image_3,
-            //                     imageset.image_4,
-            //                     imageset.image_5
-            //                 }
-            //                  ).ToListAsync();
-            return BadRequest("Invalid client request<---------------||");
-
-
         }
 
         [HttpPost("[action]")]
@@ -236,28 +227,30 @@ namespace placements.Controllers
             Console.WriteLine("userLogin" + user.userLogin + "<---------------||");
             Console.WriteLine("userPassword" + user.userPassword + "<---------------||");
 
-            if(user.userLogin == "testlogin" && user.userPassword == "testpassword")
+            foreach (User db_user in model.UserList)
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jmf84jfjg@testKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                if (db_user.userLogin == user.userLogin && db_user.userPassword == user.userPassword)
+                {
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jmf84jfjg@testKey@345"));
+                    var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://locahost:3000",
-                    audience: "http://localhost:3000",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(20),
-                    signingCredentials: signinCredentials
-                    );
+                    var tokeOptions = new JwtSecurityToken(
+                        issuer: "http://locahost:3000",
+                        audience: "http://localhost:3000",
+                        claims: new List<Claim>(),
+                        expires: DateTime.Now.AddMinutes(20),
+                        signingCredentials: signinCredentials
+                        );
 
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                Console.WriteLine("successful  response<---------------||");
-                return Ok(new { Token = tokenString });
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                    Console.WriteLine("successful  response<---------------||");
+                    return Ok(new { Token = tokenString });
+                }
             }
-            else
-            {
-                Console.WriteLine("error<---------------||");
-                return Unauthorized();
-            }
+
+            Console.WriteLine("error<---------------||");
+            return Unauthorized();
+            //Handler end
         }
     }
 }

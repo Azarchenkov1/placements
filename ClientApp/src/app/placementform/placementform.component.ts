@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders,HttpRequest, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpRequest} from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-placementform',
@@ -9,9 +10,11 @@ import { NgForm } from '@angular/forms';
 })
 export class PlacementformComponent {
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   submitData(form: NgForm, mainphoto, photo2, photo3, photo4, photo5) {
+
+    var token = localStorage.getItem("jwt");
 
     var newplacement = {
        id: 0,
@@ -27,6 +30,7 @@ mainphoto: mainphoto[0].name,
    photo3: photo3[0].name,
    photo4: photo4[0].name,
    photo5: photo5[0].name,
+   jwt_token: token
 }
 console.log("newplacement initialized<---------------||");
 
@@ -43,6 +47,10 @@ this.http.post(url, data, httpOptions)
 console.log("data was submited<---------------||");
 var response_data = response;
 console.log(response_data);
+if(response_data == "successful response")
+{
+  this.router.navigate(["/"]);
+}
 });
 
 const photoform = new FormData();

@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace placements.Controllers
 {
@@ -22,6 +23,7 @@ namespace placements.Controllers
     {
         Model model = Model.ModelFactory();
         string photoPath = "ClientApp/src/assets/photos";
+        static List<Session> sessionList = new List<Session>();
 
         [HttpGet("[action]")]
         public async Task<IActionResult> Main()
@@ -80,10 +82,35 @@ namespace placements.Controllers
             Console.WriteLine("incoming post request received: api/home/newplacement<---------------||");
             if(placement != null)
             {
-                Console.WriteLine("data was received, saving to database and send successful response<---------------||");
-                model.PlasementList.Add(placement);
-                model.SaveChanges();
-                return Json("successful response");
+                bool trigger = false;
+                Console.WriteLine("checking identity<---------------||");
+                foreach(Session sessionInstance in sessionList)
+                {
+                    if(sessionInstance.jwt_token == placement.jwt_token)
+                    {
+                        Console.WriteLine("identity confirmed<---------------||");
+                        foreach(User user in model.UserList)
+                        {
+                            if(user.id == sessionInstance.user_id)
+                            {
+                                placement.owner = user;
+                                model.PlasementList.Add(placement);
+                                trigger = true;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if(trigger)
+                {
+                    model.SaveChanges();
+                    Console.WriteLine("data was received, saving to database and send successful response<---------------||");
+                    return Json("successful response");
+                } else {
+                    Console.WriteLine("false identity, request handling declined<---------------||");
+                    return Json("invalid response");
+                }
             }
             else
             {
@@ -96,6 +123,9 @@ namespace placements.Controllers
         public ActionResult uploadfile()
         {
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
+
+
+
             try
             {
                 string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
@@ -243,6 +273,12 @@ namespace placements.Controllers
                         );
 
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+                    Session sessionInstance = new Session();
+                    sessionInstance.jwt_token = tokenString;
+                    sessionInstance.user_id = db_user.id;
+                    sessionList.Add(sessionInstance);
+                    
                     Console.WriteLine("successful  response<---------------||");
                     return Ok(new { Token = tokenString });
                 }

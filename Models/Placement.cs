@@ -24,6 +24,7 @@ namespace placements.Models
         public string photo5 { get; set; }
 
         public User owner { get; set; }
+        public string jwt_token { get; set; }
 
         public string image_1 { get; set; }
         public string image_2 { get; set; }

@@ -44,10 +44,7 @@ namespace placements.Controllers
                                   query_placement.size,
                                   query_placement.fromDate,
                                   query_placement.toDate,
-                                  query_placement.image_2,
-                                  query_placement.image_3,
-                                  query_placement.image_4,
-                                  query_placement.image_5
+                                  query_placement.owner_credentials
                               }
                               ).ToListAsync();
 
@@ -66,10 +63,8 @@ namespace placements.Controllers
                 placement.size = i.size;
                 placement.fromDate = i.fromDate;
                 placement.toDate = i.toDate;
-                placement.image_2 = i.image_2;
-                placement.image_3 = i.image_3;
-                placement.image_4 = i.image_4;
-                placement.image_5 = i.image_5;
+                placement.owner_credentials = i.owner_credentials;
+
                 PlasementList.Add(placement);
                 Console.WriteLine("time mark4<---------------||");
             });
@@ -86,7 +81,7 @@ namespace placements.Controllers
                 Console.WriteLine("checking identity<---------------||");
                 foreach(Session sessionInstance in sessionList)
                 {
-                    if(sessionInstance.jwt_token == placement.jwt_token)
+                    if(sessionInstance.jwt_token == placement.owner_credentials)
                     {
                         Console.WriteLine("identity confirmed<---------------||");
                         foreach(User user in model.UserList)
@@ -94,6 +89,7 @@ namespace placements.Controllers
                             if(user.id == sessionInstance.user_id)
                             {
                                 placement.owner = user;
+                                placement.owner_credentials = placement.owner.id.ToString();
                                 model.PlasementList.Add(placement);
                                 trigger = true;
                                 break;
@@ -119,13 +115,58 @@ namespace placements.Controllers
             }
         }
 
+        [HttpPost("[action]")]
+        public ActionResult deleteplacement([FromBody]DeletePlacementContract contract)
+        {
+            Console.WriteLine("incoming post request received: api/home/deleteplacement<---------------||");
+            if(contract != null)
+            {
+                bool trigger = false;
+                Console.WriteLine("checking identity<---------------||");
+                foreach(Session sessionInstance in sessionList)
+                {
+                    if(sessionInstance.jwt_token == contract.jwt_token)
+                    {
+                        Console.WriteLine("identity confirmed<---------------||");
+                        foreach(Placement placement in model.PlasementList)
+                        {
+                            if (placement.id == contract.placement_id && placement.owner.id == sessionInstance.user_id)
+                            {
+                                model.PlasementList.Remove(placement);
+                                trigger = true;
+                            } else {
+                                foreach (User user in model.UserList)
+                                {
+                                    if (user.id == sessionInstance.user_id && user.userAdmin == true)
+                                    {
+                                        model.PlasementList.Remove(placement);
+                                        trigger = true;
+                                    }
+                                }
+                            }
+                        }
+                        if(trigger)
+                        {
+                            model.SaveChanges();
+                            Console.WriteLine("data was deleted from database, send successful response<---------------||");
+                            return Json("successful response");
+                        } else {
+                            Console.WriteLine("declared placement does not belong to this user, invalid action<---------------||");
+                            return Json("invalid response, declared placement does not belong to this user");
+                        }
+                    }
+                }
+                Console.WriteLine("not authorized user<---------------||");
+                return Json("invalid response, not authorized user");
+            }
+            Console.WriteLine("invalid request<---------------||");
+            return Json("invalid response, data does not valid");
+        }
+
         [HttpPost("[action]"), DisableRequestSizeLimit]
         public ActionResult uploadfile()
         {
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
-
-
-
             try
             {
                 string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
@@ -278,9 +319,12 @@ namespace placements.Controllers
                     sessionInstance.jwt_token = tokenString;
                     sessionInstance.user_id = db_user.id;
                     sessionList.Add(sessionInstance);
+
+                    string user_id_value = db_user.id.ToString();
+                    string isAdmin_value = db_user.userAdmin.ToString();
                     
                     Console.WriteLine("successful  response<---------------||");
-                    return Ok(new { Token = tokenString });
+                    return Ok(new { Token = tokenString, user_id = user_id_value, isAdmin = isAdmin_value});
                 }
             }
 

@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders,HttpRequest} from '@angular/common/http';
+import { Router } from "@angular/router";
+
+
 
 @Component({
   selector: 'app-details',
@@ -14,12 +18,12 @@ export class DetailsComponent {
   size: string;
   fromDate: string;
   toDate: string;
-  image_2: any;
-  image_3: any;
-  image_4: any;
-  image_5: any;
 
-  constructor() {
+  owner_credentials: string;
+  user_id: string;
+  isAdmin: string;
+
+  constructor(private http: HttpClient, private router: Router) {
     this.header = sessionStorage.getItem("header");
     this.image_1 = sessionStorage.getItem("image_1");
     this.type = sessionStorage.getItem("type");
@@ -28,9 +32,44 @@ export class DetailsComponent {
     this.size = sessionStorage.getItem("size");
     this.fromDate = sessionStorage.getItem("fromDate");
     this.toDate = sessionStorage.getItem("toDate");
-    this.image_2 = sessionStorage.getItem("image_2");
-    this.image_3 = sessionStorage.getItem("image_3");
-    this.image_4 = sessionStorage.getItem("image_4");
-    this.image_5 = sessionStorage.getItem("image_5");
+
+    this.owner_credentials = sessionStorage.getItem("owner_credentials");
+    this.user_id = localStorage.getItem("user_id");
+    this.isAdmin = localStorage.getItem("isAdmin"); 
+   }
+
+   isHaveEditRights()
+   {
+    if(this.owner_credentials == this.user_id || this.isAdmin == "True")
+    {
+      return true;
+    }
+   }
+
+   deleteclick()
+   {
+     console.log("deleteclick");
+
+     var data = {
+      jwt_token:  localStorage.getItem("jwt"),
+      placement_id:  sessionStorage.getItem("id")
+     }
+     console.log(data.jwt_token);
+     console.log(data.placement_id);
+
+     //send query
+     let url = "http://localhost:3000/api/home/deleteplacement";
+     let deletequery = JSON.stringify(data);
+     const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+
+     this.http.post(url, deletequery, httpOptions)
+     .subscribe(response => {
+      var response_data = response;
+      console.log(response_data);
+      if(response_data == "successful response")
+      {
+        this.router.navigate(["/"]);
+      }
+     })
    }
 }

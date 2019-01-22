@@ -15,6 +15,7 @@
       <p>"size :"{{size}}</p>
       <p>"fromDate :"{{fromDate}}</p>
       <p>"toDate :"{{toDate}}</p>
+      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()">Delete</button>
     </div>
     <div class="col-md-2">
     </div>

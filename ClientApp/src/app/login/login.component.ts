@@ -22,6 +22,13 @@ login(form: NgForm) {
    }).subscribe(response => {
      let token = (<any>response).token;
      localStorage.setItem("jwt", token);
+
+     let user_id = (<any>response).user_id;
+     localStorage.setItem("user_id", user_id);
+
+     let isAdmin = (<any>response).isAdmin;
+     localStorage.setItem("isAdmin", isAdmin);
+
      localStorage.setItem("userLogin", form.value.userLogin);
      this.invalidLogin = false;
      this.router.navigate(["/"]);

@@ -28,6 +28,7 @@ export class HomeComponent {
     //index must have -1 correction couse of call placement INDEX,
     //but not element PROPERTY
 
+    sessionStorage.setItem("id", this.placementlist[idvalue].id);
     sessionStorage.setItem("header", this.placementlist[idvalue].header);
     sessionStorage.setItem("image_1", this.placementlist[idvalue].image_1);
     sessionStorage.setItem("type", this.placementlist[idvalue].type);
@@ -36,10 +37,7 @@ export class HomeComponent {
     sessionStorage.setItem("size", this.placementlist[idvalue].size);
     sessionStorage.setItem("fromDate", this.placementlist[idvalue].fromDate);
     sessionStorage.setItem("toDate", this.placementlist[idvalue].toDate);
-    sessionStorage.setItem("image_2", this.placementlist[idvalue].image_2);
-    sessionStorage.setItem("image_3", this.placementlist[idvalue].image_3);
-    sessionStorage.setItem("image_4", this.placementlist[idvalue].image_4);
-    sessionStorage.setItem("image_5", this.placementlist[idvalue].image_5);
+    sessionStorage.setItem("owner_credentials", this.placementlist[idvalue].owner_credentials);
   }
 }
 
@@ -53,8 +51,5 @@ interface Placement {
   size: string,
   fromDate: string,
   toDate: string,
-  photo2: any,
-  photo3: any,
-  photo4: any,
-  photo5: any,
+  owner_credentials: string
 }

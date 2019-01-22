@@ -18,7 +18,7 @@ export class NavMenuComponent {
   }
 
   logOut() {
-    localStorage.removeItem("jwt");
+    localStorage.clear();
   }
   
   isUserAuthenticated() {

@@ -30,7 +30,7 @@ mainphoto: mainphoto[0].name,
    photo3: photo3[0].name,
    photo4: photo4[0].name,
    photo5: photo5[0].name,
-   jwt_token: token
+                          owner_credentials: token
 }
 console.log("newplacement initialized<---------------||");
 

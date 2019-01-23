@@ -14,6 +14,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using placements.Contracts;
 
 namespace placements.Controllers
 {
@@ -69,6 +70,40 @@ namespace placements.Controllers
                 Console.WriteLine("time mark4<---------------||");
             });
             return Json(PlasementList);
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult placements([FromBody]PageRequestContract pageRequestContract)
+        {
+            Console.WriteLine("incoming post request received: api/home/placements<---------------||");
+            if (pageRequestContract != null)
+            {
+                Console.WriteLine("page received: " + pageRequestContract.page + "<---------------||");
+                List<Placement> Sample = new List<Placement>();
+                int Number = Int32.Parse(pageRequestContract.page);
+                int Counter = 1;
+                int Top = Number * 10 + 1;
+                int Bottom = Top - 10;
+                Console.WriteLine("Top: " + Top + "Bottom: " + Bottom + "<---------------||");
+                foreach (Placement placement in model.PlasementList)
+                {
+                    if (Counter > Bottom && Counter < Top)
+                    {
+                        Sample.Add(placement);
+                    }
+                    Counter++;
+                }
+                foreach (Placement placement in Sample)
+                {
+                    placement.image_2 = null;
+                    placement.image_3 = null;
+                    placement.image_4 = null;
+                    placement.image_5 = null;
+                }
+                return Json(Sample);
+            }
+            Console.WriteLine("invalid data received<---------------||");
+            return Json("invalid data sended<---------------||");
         }
 
         [HttpPost("[action]")]

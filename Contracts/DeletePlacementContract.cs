@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace placements.Models
+namespace placements.Contracts
 {
     public class DeletePlacementContract
     {

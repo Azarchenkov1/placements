@@ -10,6 +10,9 @@ export class HomeComponent {
   public placementlist = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+
+    localStorage.setItem("page", "1");
+
     console.log("send initializing request<---------------||");
     http.get<Placement[]>(baseUrl + 'api/home/main').subscribe(result => {
       this.placementlist = result;

@@ -38,7 +38,7 @@ namespace placements.Controllers
                               {
                                   query_placement.id,
                                   query_placement.header,
-                                  query_placement.image_1,
+                                  query_placement.mainphoto,
                                   query_placement.type,
                                   query_placement.location,
                                   query_placement.entity,
@@ -57,7 +57,7 @@ namespace placements.Controllers
                 Placement placement = new Placement();
                 placement.id = i.id;
                 placement.header = i.header;
-                placement.image_1 = i.image_1;
+                placement.mainphoto = i.mainphoto;
                 placement.type = i.type;
                 placement.location = i.location;
                 placement.entity = i.entity;
@@ -199,108 +199,53 @@ namespace placements.Controllers
         }
 
         [HttpPost("[action]"), DisableRequestSizeLimit]
-        public ActionResult uploadfile()
+        public ActionResult uploadfile([FromForm]PhotoSetContract contract)
         {
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
-            try
+            if (contract != null)
             {
-                string name = Request.Form.Files[0].Name; //Data can be undefined inside foreach!
-                Console.WriteLine("received image: " + name + "<---------------||");
-                foreach(var placement in model.PlasementList)
+                bool trigger = false;
+                foreach(Session sessionInstance in sessionList)
                 {
-                    Console.WriteLine("foreach mainphoto is: " + placement.mainphoto + "<---------------||");
-                    if(placement.mainphoto == name && placement.image_1 == null)
+                    if(sessionInstance.jwt_token == contract.jwt_token)
                     {
-                        Console.WriteLine("if(placement.mainphoto == name && placement.image_1 == null) => true<---------------||");
-
-                        byte[] bytearray = null;
-                        using (var readstream = Request.Form.Files[0].OpenReadStream())
-                        using (var memorystream = new MemoryStream())
+                        Console.WriteLine("identity confirmed<---------------||");
+                        foreach(Placement placement in model.PlasementList)
                         {
-                            readstream.CopyTo(memorystream);
-                            bytearray = memorystream.ToArray();
-                            Console.WriteLine(Convert.ToBase64String(bytearray) + "BYTEARRAY<---------------||");
-                            placement.image_1 = Convert.ToBase64String(bytearray);
-                            Console.WriteLine(placement.image_1 + "IMAGE_1<---------------||");
+                            if(placement.mainphoto == Request.Form.Files[0].Name)
+                            {
+                                trigger = true;
+                                try
+                                {
+                                    placement.mainphoto = Library.Converter(Request.Form.Files[0]);
+                                    placement.image_2 = Library.Converter(Request.Form.Files[1]);
+                                    placement.image_3 = Library.Converter(Request.Form.Files[2]);
+                                    placement.image_4 = Library.Converter(Request.Form.Files[3]);
+                                    placement.image_5 = Library.Converter(Request.Form.Files[4]);
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("out of range ex, continue to work<---------------||");
+                                }
+                            }
                         }
-
-                        bytearray = null;
-                        using (var readstream = Request.Form.Files[1].OpenReadStream())
-                        using (var memorystream = new MemoryStream())
-                        {
-                            readstream.CopyTo(memorystream);
-                            bytearray = memorystream.ToArray();
-                            placement.image_2 = Convert.ToBase64String(bytearray);
-
-                        }
-
-                        bytearray = null;
-                        using (var readstream = Request.Form.Files[2].OpenReadStream())
-                        using (var memorystream = new MemoryStream())
-                        {
-                            readstream.CopyTo(memorystream);
-                            bytearray = memorystream.ToArray();
-                            placement.image_3 = Convert.ToBase64String(bytearray);
-
-                        }
-
-                        bytearray = null;
-                        using (var readstream = Request.Form.Files[3].OpenReadStream())
-                        using (var memorystream = new MemoryStream())
-                        {
-                            readstream.CopyTo(memorystream);
-                            bytearray = memorystream.ToArray();
-                            placement.image_4 = Convert.ToBase64String(bytearray);
-
-                        }
-
-                        bytearray = null;
-                        using (var readstream = Request.Form.Files[4].OpenReadStream())
-                        using (var memorystream = new MemoryStream())
-                        {
-                            readstream.CopyTo(memorystream);
-                            bytearray = memorystream.ToArray();
-                            placement.image_5 = Convert.ToBase64String(bytearray);
-                        }
+                    } else {
+                        Console.WriteLine("wrong identity<---------------||");
+                        return Json("invalid identity");
                     }
                 }
-                model.SaveChanges();
-                Console.WriteLine("images successfuly saved, returning response<---------------||");
-                return Json("upload successful");
-            }
-            catch (System.Exception ex)
-            {
-                return Json("Upload Failed: " + ex.Message);
-            }
-        }
-
-        [HttpPost("[action]"), DisableRequestSizeLimit]
-        public ActionResult returnimagelist()
-        {
-            Console.WriteLine("incoming post request received: api/home/returnimagelist<---------------||");
-            List<byte[]> bytelist = new List<byte[]>();
-            byte[] globalbytearray = null;
-            if(Request.Form.Files != null)
-            {
-                foreach(IFormFile file in Request.Form.Files)
+                if (trigger)
                 {
-                    Console.WriteLine("received image:" + file.Name + "<---------------||");
-                    byte[] bytearray = null;
-                    using (var readstream = file.OpenReadStream())
-                    using (var memorystream = new MemoryStream())
-                    {
-                        readstream.CopyTo(memorystream);
-                        bytearray = memorystream.ToArray();
-                        bytelist.Add(bytearray);
-                    }
+                    model.SaveChanges();
+                    Console.WriteLine("photos successfuly saved to db<---------------||");
+                    return Json("successful response");
+                } else {
+                    Console.WriteLine("invalid action by user<---------------||");
+                    return Json("invalid action by user");
                 }
-                Console.WriteLine("Images successfuly saved to bytelist, send response with it<---------------||");
-                return Json(bytelist);
-            }
-            else
-            {
-                Console.WriteLine("Bad request, no images");
-                return Json("Bad response, no images");
+            } else {
+                Console.WriteLine("invalid request<---------------||");
+                return Json("invalid request");
             }
         }
 

@@ -54,6 +54,7 @@ if(response_data == "successful response")
 });
 
 const photoform = new FormData();
+photoform.append("jwt_token", localStorage.getItem("jwt"));
 photoform.append(mainphoto[0].name, mainphoto[0]);
 photoform.append(photo2[0].name, photo2[0]);
 photoform.append(photo3[0].name, photo3[0]);

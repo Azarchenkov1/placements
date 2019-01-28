@@ -38,7 +38,7 @@ import { PlacementsComponent } from './placements/placements.component';
       { path: 'imagetest', component: ImagetestComponent },
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent },
-      { path: 'placements', component: PlacementsComponent }
+      { path: 'placements', component: PlacementsComponent },
     ])
   ],
   providers: [],

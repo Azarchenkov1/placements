@@ -25,6 +25,16 @@ export class PlacementsComponent {
      this.http.post<PlacementContract[]>(url, pagequery, httpOptions)
      .subscribe(response => { this.placementlist = response; })
    }
+
+   details(event)
+   {
+    console.log("details");
+    var target = event.target || event.srcElement || event.currentTarget;
+    var attribute = target.attributes.id;
+    var idvalue = attribute.nodeValue;
+    console.log('target element have id ' + idvalue + ', initializing details component');
+    localStorage.setItem("placement_id", idvalue);
+   }
    
    go_left()
    {

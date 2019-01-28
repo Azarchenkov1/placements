@@ -7,14 +7,16 @@
     <div class="col-md-2">
     </div>
     <div class="col-md-8 div-main">
-      <h3>{{ header }}</h3>
-      <img src="data:image/jpg;base64,{{image_1}}" style="width: 300px">
-      <p>"type :"{{ type }}</p>
-      <p>"location :"{{location}}</p>
-      <p>"entity :"{{entity}}</p>
-      <p>"size :"{{size}}</p>
-      <p>"fromDate :"{{fromDate}}</p>
-      <p>"toDate :"{{toDate}}</p>
+      <h3>{{ this.placement.header }}</h3>
+      <img src="data:image/jpg;base64,{{placement.mainphoto}}" style="width: 300px">
+      <p>"type :"{{ placement.type }}</p>
+      <p>"location :"{{placement.location}}</p>
+      <p>"entity :"{{placement.entity}}</p>
+      <p>"size :"{{placement.size}}</p>
+      <p>"fromDate :"{{placement.fromDate}}</p>
+      <p>"toDate :"{{placement.toDate}}</p>
+      <p>"owner name :"{{placement.userName}}</p>
+      <p>"owner email :"{{placement.userEmail}}</p>
       <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()">Delete</button>
     </div>
     <div class="col-md-2">

@@ -107,6 +107,55 @@ namespace placements.Controllers
         }
 
         [HttpPost("[action]")]
+        public IActionResult details([FromBody]RequestedPlacementContract contract)
+        {
+            Console.WriteLine("incoming post request received: api/home/details<---------------||");
+            if(contract != null)
+            {
+                foreach(Placement placement in model.PlasementList)
+                {
+                    if(placement.id == contract.id)
+                    {
+                        foreach(User user in model.UserList)
+                        {
+                            if(user.id.ToString() == placement.owner_credentials)
+                            {
+                                PlacementDetails placementDetails = new PlacementDetails();
+
+                                placementDetails.header = placement.header;
+                                placementDetails.type = placement.type;
+                                placementDetails.location = placement.location;
+                                placementDetails.entity = placement.entity;
+                                placementDetails.size = placement.size;
+                                placementDetails.fromDate = placement.fromDate;
+                                placementDetails.toDate = placement.toDate;
+
+                                placementDetails.mainphoto = placement.mainphoto;
+                                placementDetails.image_2 = placement.image_2;
+                                placementDetails.image_3 = placement.image_3;
+                                placementDetails.image_4 = placement.image_4;
+                                placementDetails.image_5 = placement.image_5;
+
+                                placementDetails.userEmail = user.userEmail;
+                                placementDetails.userPhone = user.userPhone;
+                                placementDetails.userReputation = user.userReputation;
+                                placementDetails.userPhoto = user.userPhoto;
+                                placementDetails.userName = user.userName;
+                                placementDetails.userSurName = user.userSurName;
+                                placementDetails.userCity = user.userCity;
+
+                                placementDetails.userId = user.id.ToString();
+
+                                return Json(placementDetails);
+                            }
+                        }
+                    }
+                }
+            }
+            return Json("invalid request");
+        }
+
+        [HttpPost("[action]")]
         public IActionResult newplacement([FromBody]Placement placement)
         {
             Console.WriteLine("incoming post request received: api/home/newplacement<---------------||");

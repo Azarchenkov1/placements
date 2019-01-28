@@ -55,7 +55,7 @@ namespace placements.Models
         public Placement placement2 = new Placement { header = "street bigbord placement", type = "street", location = "Kiev, Saksaganskogo str." };
         public Placement placement3 = new Placement { header = "sky mall placements", type = "building", location = "Kiev, Generala Vatutina str." };
 
-        public User user1 = new User { userLogin = "Admin", userPassword = "Admin", userAdmin = true };
-        public User user2 = new User { userLogin = "Danil", userPassword = "Danil", userAdmin = false };
+        public User user1 = new User { userLogin = "Admin", userPassword = "Admin", userAdmin = true, userEmail = "Nikita@ukr.net", userName = "Nikita" };
+        public User user2 = new User { userLogin = "Danil", userPassword = "Danil", userAdmin = false, userEmail = "Danil@ukr.net", userName = "Danil" };
     }
 }

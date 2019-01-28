@@ -87,7 +87,7 @@ namespace placements.Controllers
                 Console.WriteLine("Top: " + Top + "Bottom: " + Bottom + "<---------------||");
                 foreach (Placement placement in model.PlasementList)
                 {
-                    if (Counter > Bottom && Counter < Top)
+                    if (Counter >= Bottom && Counter < Top)
                     {
                         Sample.Add(placement);
                     }

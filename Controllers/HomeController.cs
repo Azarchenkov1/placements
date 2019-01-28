@@ -204,15 +204,20 @@ namespace placements.Controllers
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
             if (contract != null)
             {
+                Console.WriteLine("Contract valid<---------------||");
                 bool trigger = false;
                 foreach(Session sessionInstance in sessionList)
                 {
                     if(sessionInstance.jwt_token == contract.jwt_token)
                     {
                         Console.WriteLine("identity confirmed<---------------||");
+                        Console.WriteLine(model.PlasementList.Count() + "<---------------||");
                         foreach(Placement placement in model.PlasementList)
                         {
-                            if(placement.mainphoto == Request.Form.Files[0].Name)
+                            Console.WriteLine(placement.id + " id, header " + placement.header + "<---------------||");
+                            Console.WriteLine(placement.owner_credentials + " == " + sessionInstance.user_id.ToString() + "<---------------||");
+
+                            if (placement.mainphoto == Request.Form.Files[0].Name && placement.owner_credentials == sessionInstance.user_id.ToString())
                             {
                                 trigger = true;
                                 try

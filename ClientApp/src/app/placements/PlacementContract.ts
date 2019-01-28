@@ -1,7 +1,7 @@
 interface PlacementContract {
     id: number,
     header: string,
-    image_1: any,
+    mainphoto: any,
     type: string,
     location: string,
     entity: string,

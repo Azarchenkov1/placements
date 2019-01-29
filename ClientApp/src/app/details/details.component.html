@@ -7,16 +7,54 @@
     <div class="col-md-2">
     </div>
     <div class="col-md-8 div-main">
-      <h3>{{ this.placement.header }}</h3>
-      <img src="data:image/jpg;base64,{{placement.mainphoto}}" style="width: 300px">
-      <p>"type :"{{ placement.type }}</p>
-      <p>"location :"{{placement.location}}</p>
-      <p>"entity :"{{placement.entity}}</p>
-      <p>"size :"{{placement.size}}</p>
-      <p>"fromDate :"{{placement.fromDate}}</p>
-      <p>"toDate :"{{placement.toDate}}</p>
-      <p>"owner name :"{{placement.userName}}</p>
-      <p>"owner email :"{{placement.userEmail}}</p>
+
+      <div class="photo-div">
+        <div class="mainphoto">
+            <img *ngIf="!mainphoto" src="data:image/jpg;base64,{{placement.mainphoto}}" style="max-width: 700px; max-height: 390px;">
+            <img *ngIf="mainphoto" src="data:image/jpg;base64,{{mainphoto}}" style="max-width: 700px; max-height: 390px;">
+        </div>
+        <div class="raw images" style="margin-top: 5px">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+              <img id="1" src="data:image/jpg;base64,{{placement.mainphoto}}" style="max-width: 110px; max-height: 70px;" (click)="photoclick($event)">
+          </div>
+          <div class="col-md-2">
+              <img id="2" src="data:image/jpg;base64,{{placement.image_2}}" style="max-width: 110px; max-height: 70px;" (click)="photoclick($event)">
+          </div>
+          <div class="col-md-2">
+              <img id="3" src="data:image/jpg;base64,{{placement.image_3}}" style="max-width: 110px; max-height: 70px;" (click)="photoclick($event)">
+          </div>
+          <div class="col-md-2">
+              <img id="4" src="data:image/jpg;base64,{{placement.image_4}}" style="max-width: 110px; max-height: 70px;" (click)="photoclick($event)">
+          </div>
+          <div class="col-md-2">
+              <img id="5" src="data:image/jpg;base64,{{placement.image_5}}" style="max-width: 110px; max-height: 70px;" (click)="photoclick($event)">
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+      </div>
+
+      <div class="row data-div">
+        <div class="col-md-6 div">
+            <h3>{{ this.placement.header }}</h3>
+            <h4>тип:  {{ placement.type }}</h4>
+            <h4>местоположение:  {{placement.location}}</h4>
+            <h4>количество:  {{placement.entity}}</h4>
+            <h4>размер:  {{placement.size}}</h4>
+            <h4>дата начала аренды:  {{placement.fromDate}}</h4>
+            <h4>дата окончания аренды:  {{placement.toDate}}</h4>
+        </div>
+        <div class="col-md-6 div">
+          <h3>Контактные данные владельца</h3>
+          <h4>Репутация пользователя:  {{placement.userReputation}}</h4>
+            <h4>Имя:  {{placement.userName}}</h4>
+            <h4>Фамилия:  {{placement.userSurName}}</h4>
+            <h4>Телефон:  {{placement.userPhone}}</h4>
+            <h4>Електронная почта:  {{placement.userEmail}}</h4>
+            <h4>Город:  {{placement.userCity}}</h4>
+        </div>
+      </div>
+
       <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()">Delete</button>
     </div>
     <div class="col-md-2">

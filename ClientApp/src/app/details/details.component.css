@@ -1,6 +1,5 @@
 .div-main {
-    background-color: lightgray; 
-    text-align: center;
+    background-color: white; 
     margin-top: 5px; 
     border-style: solid; 
     border-width: 2px; 
@@ -20,7 +19,15 @@
     margin: auto;
     width: 287px;
     height: 44px;
-    border-style: solid; 
-    border-width: 2px; 
-    border-color: black
+}
+.mainphoto {
+    margin-top: 5px;
+    text-align: center;
+}
+.images {
+    margin: auto;
+}
+.photo-div{
+    margin: auto;
+    height: 480px;
 }

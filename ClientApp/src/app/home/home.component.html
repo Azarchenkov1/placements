@@ -1,37 +1,40 @@
-<p *ngIf="!placementlist"><em>Loading...</em></p>
-
 <div class="placements-image">
         <img src="../../assets/placements.png" style="height: 40px">
-  </div>
+</div>
 
-<div *ngIf="placementlist" class="container">
+<div class="container">
     <div class="row">
       <div class="col-md-2">
       </div>
       <div class="col-md-8 div-main">
-      <div *ngFor="let placement of placementlist" class="div-placement row">
+          <div class="div-placement" onmouseover="this.className='onmouseover'" onmouseout="this.className='div-placement'">
+              <div class="col-md-6">
+              <img src="../../assets/advertize.png" style="height: 156px">
+            </div>
         <div class="col-md-6">
-          <img src="data:image/jpg;base64,{{placement.mainphoto}}" style="width: 250px;">
+            <h4>
+                Если вы хотите разместить рекламу<br/>и ищете подходящее место или сайт?<br/>Найдите подходящее предложение<br/>и свяжитесь с владельцем
+            </h4>
+              <a href="http://localhost:3000/placements">
+              <button class="btn btn-primary btn-block">Поиск</button>
+              </a>
         </div>
-        <div class="col-md-6">
-          <h3>{{ placement.header }}</h3>
-          <p>placement type: {{ placement.type }}</p>
-          <p>placement location: {{ placement.location }}</p>
-          <a href="http://localhost:3000/details">
-            <button id="{{ placement.id }}" type="button" class="btn btn-primary btn-block" (click)="details($event)" >Detail information</button>
-         </a>
         </div>
-      </div>
-    </div>
-      <div class="col-md-2">
-        <div class="div-main Menu">
-            <p>Menu</p>
-            <div style="padding: 5px">
-                <a href="http://localhost:3000/placementform">
-                  <button type="button" class="btn btn-primary btn-block">Make new offer</button>
-                </a>
+        <div class="div-placement" onmouseover="this.className='onmouseover'" onmouseout="this.className='div-placement'">
+            <div class="col-md-6">
+                <h4>
+                    Если у вас есть место для<br/>размещения рекламы или сайт,<br/>но никто о нем не знает. Создайте<br/>обьявление на нашем сервисе.
+                </h4>
+                  <a href="http://localhost:3000/registration">
+                  <button class="btn btn-primary btn-block">Регистрация</button>
+                  </a>
+            </div>
+            <div class="col-md-6">
+                <img src="../../assets/billboard.png" style="height: 146px">
             </div>
         </div>
+      </div>
+      <div class="col-md-2">
       </div>
     </div>
  </div>

@@ -27,49 +27,9 @@ namespace placements.Controllers
         static List<Session> sessionList = new List<Session>();
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> Main()
+        public void Main()
         {
-            Console.WriteLine("time mark1<---------------||");
-
-
-            List<Placement> PlasementList = new List<Placement>();
-            var Data = await (from query_placement in model.PlasementList
-                              select new
-                              {
-                                  query_placement.id,
-                                  query_placement.header,
-                                  query_placement.mainphoto,
-                                  query_placement.type,
-                                  query_placement.location,
-                                  query_placement.entity,
-                                  query_placement.size,
-                                  query_placement.fromDate,
-                                  query_placement.toDate,
-                                  query_placement.owner_credentials
-                              }
-                              ).ToListAsync();
-
-            Console.WriteLine("time mark2<---------------||");
-
-            Data.ForEach(i =>
-            {
-                Console.WriteLine("time mark3<---------------||");
-                Placement placement = new Placement();
-                placement.id = i.id;
-                placement.header = i.header;
-                placement.mainphoto = i.mainphoto;
-                placement.type = i.type;
-                placement.location = i.location;
-                placement.entity = i.entity;
-                placement.size = i.size;
-                placement.fromDate = i.fromDate;
-                placement.toDate = i.toDate;
-                placement.owner_credentials = i.owner_credentials;
-
-                PlasementList.Add(placement);
-                Console.WriteLine("time mark4<---------------||");
-            });
-            return Json(PlasementList);
+            Console.WriteLine("incoming get request received: api/home<---------------||");
         }
 
         [HttpPost("[action]")]

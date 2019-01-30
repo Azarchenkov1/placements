@@ -1,6 +1,4 @@
-<p *ngIf="!placementlist"><em>Loading...</em></p>
-
-<div *ngIf="placementlist" class="container">
+<div class="container">
     <div class="row">
       <div class="col-md-2">
       </div>
@@ -11,9 +9,9 @@
           </div>
           <div class="col-md-6">
             <h3>{{ placement.header }}</h3>
-            <p>placement type: {{ placement.type }}</p>
-            <p>placement location: {{ placement.location }}</p>
-            <a href="http://localhost:3000/details">
+            <p>тип: {{ placement.type }}</p>
+            <p>местоположение: {{ placement.location }}</p>
+            <a routerLink="/details">
               <button id="{{ placement.id }}" type="button" class="btn btn-primary btn-block" (click)="details($event)" >Detail information</button>
             </a>
           </div>
@@ -30,7 +28,7 @@
         <div class="div-main Menu">
             <p>Menu</p>
             <div style="padding: 5px">
-                <a href="http://localhost:3000/placementform">
+                <a routerLink="/placementform">
                   <button type="button" class="btn btn-primary btn-block">Make new offer</button>
                 </a>
             </div>

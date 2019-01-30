@@ -18,7 +18,10 @@ export class NavMenuComponent {
   }
 
   logOut() {
-    localStorage.clear();
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("userLogin");
+    localStorage.removeItem("isAdmin");
   }
   
   isUserAuthenticated() {

@@ -1,0 +1,98 @@
+<div class="placements-image">
+  <img src="../../assets/placements.png" style="height: 40px">
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8 div-main">
+      <form class="form-horizontal" #placementForm="ngForm" 
+      (ngSubmit)="submitData(placementForm, mainphoto.files, photo2.files, photo3.files, photo4.files, photo5.files)">  
+      <h2 style="text-align: center">Редактировать размещение</h2>
+      <br/>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Заголовок</label>
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="header" name="header" ngModel class="form-control" placeholder="{{header}}" required autofocus>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>основная фотография</label>    
+        </div>
+        <div class="col-md-6">
+          <div class="div-placement" style="background-color:beige; padding: 5px">
+            <input #mainphoto type="file" name="mainphoto" ngModel />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>тип места</label>     
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="type" name="type" ngModel class="form-control" placeholder="{{type}}" required>            
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>место расположения</label>                    
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="location" name="location" ngModel class="form-control" placeholder="{{location}}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>количество</label>                   
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="entity" name="entity" ngModel class="form-control" placeholder="{{entity}}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>размер</label>                     
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="size" name="size" ngModel class="form-control" placeholder="{{size}}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>дата начала аренды</label>                    
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="fromDate" name="fromDate" ngModel class="form-control" placeholder="{{fromDate}}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>дата окончания аренды</label>                     
+        </div>
+        <div class="col-md-6">
+          <input type="email" id="toDate" name="toDate" ngModel class="form-control" placeholder="{{toDate}}" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>дополнительные фотографии</label>                     
+        </div>
+        <div class="col-md-6">
+          <div class="div-placement" style="background-color:beige; padding: 5px">
+            <input #photo2 type="file" name="photo2" ngModel />
+            <input #photo3 type="file" name="photo3" ngModel />
+            <input #photo4 type="file" name="photo4" ngModel />
+            <input #photo5 type="file" name="photo5" ngModel />
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="submitData()">Редактировать</button>
+      </form>
+      <div style="height: 20px"></div>  
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>

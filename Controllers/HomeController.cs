@@ -29,12 +29,51 @@ namespace placements.Controllers
         [HttpGet("[action]")]
         public void Main()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming get request received: api/home<---------------||");
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> mainquery([FromBody]PageRequestContract pageRequestContract)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("incoming post request received: api/home/mainquery<---------------||");
+            Console.WriteLine("time mark1<---------------||");
+            List<Placement> PlasementList = new List<Placement>();
+            var Data = await(from query_placement in model.PlasementList
+                             select new
+                             {
+                                 query_placement.id,
+                                 query_placement.header,
+                                 query_placement.mainphoto,
+                                 query_placement.type,
+                                 query_placement.location
+                             }
+                              ).ToListAsync();
+
+            Console.WriteLine("time mark2<---------------||");
+
+            Data.ForEach(i =>
+            {
+                Console.WriteLine("time mark3<---------------||");
+                Placement placement = new Placement();
+
+                placement.id = i.id;
+                placement.header = i.header;
+                placement.mainphoto = i.mainphoto;
+                placement.type = i.type;
+                placement.location = i.location;
+
+                PlasementList.Add(placement);
+                Console.WriteLine("time mark4<---------------||");
+            });
+            return Json(PlasementList);
         }
 
         [HttpPost("[action]")]
         public IActionResult placements([FromBody]PageRequestContract pageRequestContract)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/placements<---------------||");
             if (pageRequestContract != null)
             {
@@ -67,8 +106,48 @@ namespace placements.Controllers
         }
 
         [HttpPost("[action]")]
+        public IActionResult editplacement([FromBody]Placement contract)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("incoming post request received: api/home/editplacement<---------------||");
+            if(contract != null)
+            {
+                Console.WriteLine("checking identity<---------------||");
+                foreach(Session sessionInstance in sessionList)
+                {
+                    if(sessionInstance.jwt_token == contract.owner_credentials)
+                    {
+                        Console.WriteLine("identity confirmed<---------------||");
+
+                        Placement placement = model.PlasementList.Single(p => 
+                        p.owner.id == sessionInstance.user_id && p.id == contract.id);
+
+                        placement.header = contract.header;
+                        placement.mainphoto = contract.mainphoto;
+                        placement.type = contract.type;
+                        placement.location = contract.location;
+                        placement.entity = contract.entity;
+                        placement.size = contract.size;
+                        placement.fromDate = contract.fromDate;
+                        placement.toDate = placement.toDate;
+
+                        model.SaveChanges();
+
+                        Console.WriteLine("data successfuly changed<---------------||");
+                        return Json("successful response");
+                    }
+                }
+                Console.WriteLine("invalid identity<---------------||");
+                return Json("invalid response");
+            }
+            Console.WriteLine("invalid data<---------------||");
+            return Json("invalid response");
+        }
+
+        [HttpPost("[action]")]
         public IActionResult details([FromBody]RequestedPlacementContract contract)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/details<---------------||");
             if(contract != null)
             {
@@ -81,6 +160,8 @@ namespace placements.Controllers
                             if(user.id.ToString() == placement.owner_credentials)
                             {
                                 PlacementDetails placementDetails = new PlacementDetails();
+
+                                placementDetails.id = placement.id.ToString();
 
                                 placementDetails.header = placement.header;
                                 placementDetails.type = placement.type;
@@ -118,6 +199,7 @@ namespace placements.Controllers
         [HttpPost("[action]")]
         public IActionResult newplacement([FromBody]Placement placement)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/newplacement<---------------||");
             if(placement != null)
             {
@@ -162,6 +244,7 @@ namespace placements.Controllers
         [HttpPost("[action]")]
         public ActionResult deleteplacement([FromBody]DeletePlacementContract contract)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/deleteplacement<---------------||");
             if(contract != null)
             {
@@ -210,6 +293,7 @@ namespace placements.Controllers
         [HttpPost("[action]"), DisableRequestSizeLimit]
         public ActionResult uploadfile([FromForm]PhotoSetContract contract)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
             if (contract != null)
             {
@@ -266,6 +350,7 @@ namespace placements.Controllers
         [HttpPost("[action]")]
         public IActionResult Registration([FromBody]User user)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Incoming client request: api/home/registration<---------------||");
             if (user == null)
             {
@@ -283,6 +368,7 @@ namespace placements.Controllers
         [HttpPost("[action]")]
         public IActionResult Login([FromBody]User user)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Incoming client request: api/home/login<---------------||");
             if (user == null)
             {

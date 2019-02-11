@@ -1,5 +1,7 @@
 interface PlacementContract {
     
+    id: number,
+
     header: string,
     type: string,
     location: string,

@@ -17,7 +17,7 @@ export class PlacementsComponent {
     console.log(this.page);
     
      //send query
-     let url = "http://localhost:3000/api/home/placements";
+     let url = "http://localhost:3000/api/home/mainquery";
      let pagequery = JSON.stringify(pageQueryContract);
      console.log(pagequery);
      const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};

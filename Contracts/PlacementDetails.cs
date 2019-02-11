@@ -7,6 +7,8 @@ namespace placements.Contracts
 {
     public class PlacementDetails
     {
+        public string id { get; set; }
+
         public string header { get; set; }
         public string type { get; set; }
         public string location { get; set; }

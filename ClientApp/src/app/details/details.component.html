@@ -56,6 +56,9 @@
       </div>
 
       <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()">Delete</button>
+      <a routerLink="/editplacement">
+      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="editclick()">Edit</button>
+      </a>
     </div>
     <div class="col-md-2">
     </div>

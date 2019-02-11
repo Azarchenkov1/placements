@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-details',
@@ -74,5 +74,23 @@ export class DetailsComponent {
         this.router.navigate(["/"]);
       }
      })
+    }
+
+    editclick()
+    {
+      console.log("editclick()");
+
+      sessionStorage.setItem("id", this.placement.id);
+
+      sessionStorage.setItem("header", this.placement.header);
+      sessionStorage.setItem("type", this.placement.type);
+      sessionStorage.setItem("location", this.placement.location);
+      sessionStorage.setItem("entity", this.placement.entity);
+      sessionStorage.setItem("size", this.placement.size);
+      sessionStorage.setItem("fromDate", this.placement.fromDate);
+      sessionStorage.setItem("toDate", this.placement.toDate);
+      
+      sessionStorage.setItem("mainphoto", this.placement.mainphoto);
+      sessionStorage.setItem("userId", this.placement.userId);
     }
 }

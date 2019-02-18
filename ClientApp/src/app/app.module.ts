@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PlacementsComponent } from './placements/placements.component';
 import { EditplacementComponent } from './editplacement/editplacement.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EditplacementComponent } from './editplacement/editplacement.component'
     RegistrationComponent,
     PlacementsComponent,
     EditplacementComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,7 +43,8 @@ import { EditplacementComponent } from './editplacement/editplacement.component'
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent },
       { path: 'placements', component: PlacementsComponent },
-      { path: 'editplacement', component: EditplacementComponent }
+      { path: 'editplacement', component: EditplacementComponent },
+      { path: 'search', component: SearchComponent }
     ])
   ],
   providers: [],

@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using placements.Contracts;
+using placements.DataAccessLayer;
 
 namespace placements.Controllers
 {
@@ -38,36 +39,10 @@ namespace placements.Controllers
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/mainquery<---------------||");
-            Console.WriteLine("time mark1<---------------||");
-            List<Placement> PlasementList = new List<Placement>();
-            var Data = await(from query_placement in model.PlasementList
-                             select new
-                             {
-                                 query_placement.id,
-                                 query_placement.header,
-                                 query_placement.mainphoto,
-                                 query_placement.type,
-                                 query_placement.location
-                             }
-                              ).ToListAsync();
 
-            Console.WriteLine("time mark2<---------------||");
+            List<Placement> Sample = DataAccess.GetPlacements(Int32.Parse(pageRequestContract.page), pageRequestContract.header, pageRequestContract.type, pageRequestContract.location);
 
-            Data.ForEach(i =>
-            {
-                Console.WriteLine("time mark3<---------------||");
-                Placement placement = new Placement();
-
-                placement.id = i.id;
-                placement.header = i.header;
-                placement.mainphoto = i.mainphoto;
-                placement.type = i.type;
-                placement.location = i.location;
-
-                PlasementList.Add(placement);
-                Console.WriteLine("time mark4<---------------||");
-            });
-            return Json(PlasementList);
+            return Json(Sample);
         }
 
         [HttpPost("[action]")]

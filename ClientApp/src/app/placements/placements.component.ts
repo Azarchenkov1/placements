@@ -12,13 +12,17 @@ export class PlacementsComponent {
   public page;
 
   constructor(private http: HttpClient) {
-    var pageQueryContract = { page: localStorage.getItem("page") };
+    var QueryContract = { page: localStorage.getItem("page"),
+    header: localStorage.getItem("header"),
+    type: localStorage.getItem("type"),
+    location: localStorage.getItem("location")
+  };
     this.page = localStorage.getItem("page");
     console.log(this.page);
     
      //send query
      let url = "http://localhost:3000/api/home/mainquery";
-     let pagequery = JSON.stringify(pageQueryContract);
+     let pagequery = JSON.stringify(QueryContract);
      console.log(pagequery);
      const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 

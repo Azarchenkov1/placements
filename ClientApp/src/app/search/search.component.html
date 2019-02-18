@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 div-placement">
+    <h3>Поиск</h3>
+    <form class="form-horizontal" #queryForm="ngForm" 
+      (ngSubmit)="submitData(queryForm)">  
+    <div class="row">
+     <div class="col-md-6">
+       <h3>Заголовок: </h3>
+     </div>
+     <div class="col-md-6">
+      <input type="email" id="header" name="header" ngModel class="form-control">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Тип рекламы: </h3>
+      </div>
+      <div class="col-md-6">
+       <input type="email" id="type" name="type" ngModel class="form-control">
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-6">
+        <h3>Расположение: </h3>
+      </div>
+      <div class="col-md-6">
+       <input type="email" id="location" name="location" ngModel class="form-control">
+      </div>
+     </div>
+     
+     <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="submitData()">Найти</button>
+    
+  </form>
+  </div>
+  <div class="col-md-3"></div>
+</div>

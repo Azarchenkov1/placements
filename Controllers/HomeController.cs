@@ -16,6 +16,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using placements.Contracts;
 using placements.DataAccessLayer;
+using System.Threading;
 
 namespace placements.Controllers
 {
@@ -192,6 +193,7 @@ namespace placements.Controllers
                                 placement.owner = user;
                                 placement.owner_credentials = placement.owner.id.ToString();
                                 model.PlasementList.Add(placement);
+                                Console.WriteLine(placement.mainphoto);
                                 trigger = true;
                                 break;
                             }
@@ -268,25 +270,27 @@ namespace placements.Controllers
         [HttpPost("[action]"), DisableRequestSizeLimit]
         public ActionResult uploadfile([FromForm]PhotoSetContract contract)
         {
+            
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("incoming post request received: api/home/uploadfile<---------------||");
             if (contract != null)
             {
+                Thread.Sleep(2000);
                 Console.WriteLine("Contract valid<---------------||");
                 bool trigger = false;
+                bool login_trigger = false;
                 foreach(Session sessionInstance in sessionList)
                 {
                     if(sessionInstance.jwt_token == contract.jwt_token)
                     {
+                        login_trigger = true;
                         Console.WriteLine("identity confirmed<---------------||");
                         Console.WriteLine(model.PlasementList.Count() + "<---------------||");
                         foreach(Placement placement in model.PlasementList)
                         {
-                            Console.WriteLine(placement.id + " id, header " + placement.header + "<---------------||");
-                            Console.WriteLine(placement.owner_credentials + " == " + sessionInstance.user_id.ToString() + "<---------------||");
-
-                            if (placement.mainphoto == Request.Form.Files[0].Name && placement.owner_credentials == sessionInstance.user_id.ToString())
+                            if (placement.mainphoto == contract.key)
                             {
+                                Console.WriteLine(contract.key);
                                 trigger = true;
                                 try
                                 {
@@ -302,10 +306,12 @@ namespace placements.Controllers
                                 }
                             }
                         }
-                    } else {
-                        Console.WriteLine("wrong identity<---------------||");
-                        return Json("invalid identity");
-                    }
+                    } 
+                }
+                if (!login_trigger)
+                {
+                    Console.WriteLine("Wrong identity<---------------||");
+                    return Json("Wrong identity, access denied!");
                 }
                 if (trigger)
                 {

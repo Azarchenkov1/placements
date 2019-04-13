@@ -9,17 +9,22 @@ import { Router } from "@angular/router";
   styleUrls: ['./placementform.component.css']
 })
 export class PlacementformComponent {
-  
+  await: boolean;
   constructor(private http: HttpClient, private router: Router) { }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   submitData(form: NgForm, mainphoto, photo2, photo3, photo4, photo5) {
 
+    var key = Math.random() * (2000 - 1000) + 1000;
     var token = localStorage.getItem("jwt");
 
     var newplacement = {
        id: 0,
    header: form.value.header,
-mainphoto: mainphoto[0].name,
+mainphoto: key.toString(),
      type: form.value.type,
  location: form.value.location,
    entity: form.value.entity,
@@ -54,6 +59,7 @@ if(response_data == "successful response")
 });
 
 const photoform = new FormData();
+photoform.append("key", key.toString());
 photoform.append("jwt_token", localStorage.getItem("jwt"));
 photoform.append(mainphoto[0].name, mainphoto[0]);
 photoform.append(photo2[0].name, photo2[0]);
@@ -61,6 +67,9 @@ photoform.append(photo3[0].name, photo3[0]);
 photoform.append(photo4[0].name, photo4[0]);
 photoform.append(photo5[0].name, photo5[0]);
 console.log("photoform initialized<---------------||");
+
+this.await = true;
+this.sleep(2000);
 
 //send photos
 const photoFormSendRequest = new HttpRequest('POST', `api/home/uploadfile` , photoform);

@@ -157,7 +157,7 @@ namespace placements.Controllers
                                 placementDetails.userPhone = user.userPhone;
                                 placementDetails.userReputation = user.userReputation;
                                 placementDetails.userPhoto = user.userPhoto;
-                                placementDetails.userName = user.userName;
+                                placementDetails.userName = user.userLogin;
                                 placementDetails.userSurName = user.userSurName;
                                 placementDetails.userCity = user.userCity;
 

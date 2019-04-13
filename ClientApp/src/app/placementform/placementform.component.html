@@ -33,7 +33,11 @@
             <label>тип места</label>     
           </div>
           <div class="col-md-6">
-            <input type="email" id="type" name="type" ngModel class="form-control" required>            
+              <select id="type" name="type" ngModel class="form-control">
+                  <option value="billboard">billboard</option>
+                  <option value="other">other</option>
+                  <option value="website">website</option>
+                </select>
           </div>
         </div>
         <div class="row">
@@ -65,7 +69,7 @@
             <label>дата начала аренды</label>                    
           </div>
           <div class="col-md-6">
-            <input type="email" id="fromDate" name="fromDate" ngModel class="form-control" required>
+            <input type="date" id="fromDate" name="fromDate" ngModel class="form-control" required>
           </div>
         </div>
         <div class="row">
@@ -73,7 +77,7 @@
             <label>дата окончания аренды</label>                     
           </div>
           <div class="col-md-6">
-            <input type="email" id="toDate" name="toDate" ngModel class="form-control" required>
+            <input type="date" id="toDate" name="toDate" ngModel class="form-control" required>
           </div>
         </div>
         <div class="row">

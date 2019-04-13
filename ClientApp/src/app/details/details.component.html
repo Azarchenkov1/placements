@@ -55,11 +55,13 @@
         </div>
       </div>
 
-      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()">Delete</button>
+      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="deleteclick()" style="margin-top: 25px">Delete</button>
       <a routerLink="/editplacement">
-      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="editclick()">Edit</button>
+      <button *ngIf="isHaveEditRights()" class="btn btn-primary btn-block" (click)="editclick()" style="margin-top: 25px">Edit</button>
       </a>
+      <p style="margin-top: 25px"></p>
     </div>
+    <p style="margin-top: 25px"></p>
     <div class="col-md-2">
     </div>
   </div>
